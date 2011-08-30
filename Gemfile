@@ -3,6 +3,11 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
+gem "beanstalk-client", ">= 1.1.0"
+gem "bson", ">= 1.3.1"
+gem "bson_ext", ">= 1.3.1"
+gem "zmq", ">= 2.1.3"
+
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
