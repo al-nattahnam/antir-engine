@@ -99,7 +99,7 @@ module Antir
 
       def stop
         conn = Libvirt::connect('openvz:///system')
-        conn.
+        #
       end
 
       def xml
@@ -163,9 +163,3 @@ module Antir
     end
   end
 end
-
-
-#puts domain_xml.to_s(:indent => true)
-
-#conn.domains.create("<domain type='openvz' id='135'>\n  <name>135</name>\n <vcpu>1</vcpu>  <devices> <filesystem type='template'><source name='debian-6.0-x86'/><target dir='/'/></filesystem>\n<interface type='ethernet'>  <ip address='10.10.1.135'/></interface></devices>  <memory>0</memory>\n  <os>\n    <type>exe</type>\n<init>/sbin/init</init>  </os>\n</domain>")
-

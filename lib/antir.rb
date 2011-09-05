@@ -4,3 +4,4 @@
 #end
 
 require 'antir/server'
+require 'antir/container'
