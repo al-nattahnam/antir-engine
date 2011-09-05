@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = %q{2011-08-30}
+  s.date = %q{2011-09-05}
   s.description = %q{Antir VPSs configuration interface}
   s.email = %q{krakatoa1987@gmail.com}
   s.extra_rdoc_files = [
@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
     "VERSION",
     "antir.gemspec",
     "lib/antir.rb",
+    "lib/antir/container/vps.rb",
     "lib/antir/server.rb",
     "test/helper.rb",
     "test/test_antir.rb"
