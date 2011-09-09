@@ -10,9 +10,9 @@ require 'singleton'
 # dom.stop
 
 module Antir
-  module Hypervisor
-    class DomainHandler
-      include Singleton
+  module HypervisorHandler
+
+    module DomainHandler
 
       def connection=(connection)
         @@connection = connection
@@ -21,6 +21,11 @@ module Antir
       def max_id
         @@connection.domains.collect(&:id).max
       end
+    end
+
+    class Domains
+      include Antir::HypervisorHandler::DomainHandler
+      include Singleton
     end
   end
 end
