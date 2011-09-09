@@ -14,13 +14,12 @@ module Antir
     class DomainHandler
       include Singleton
 
-      def self.instance(connection)
+      def connection=(connection)
         @@connection = connection
-        super()
       end
 
-      def self.max_id
-        @connection.domains.collect(&:id).max
+      def max_id
+        @@connection.domains.collect(&:id).max
       end
     end
   end
