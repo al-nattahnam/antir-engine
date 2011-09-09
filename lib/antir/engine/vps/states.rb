@@ -1,9 +1,8 @@
+require 'state_machine'
+
 module Antir
   module Engine
     class VPS
-      module States
-        require 'state_machine'
-
         state_machine :state, :initial => :pending do
           before_transition :pending => :waiting do
             puts 'creating!'
@@ -49,7 +48,6 @@ module Antir
             transition :waiting => :ready
           end
         end
-      end
     end
   end
 end
