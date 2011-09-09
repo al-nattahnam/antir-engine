@@ -8,7 +8,7 @@ module Antir
     #@@hypervisors = [:openvz, :xen]
     HYPERVISOR = 'openvz'
     @@connection = Libvirt::connect("#{HYPERVISOR}:///system")
-    @@domain_handler = Antir::Hypervisor::DomainHandler.instance
+    @@domain_handler = Antir::HypervisorHandler::Domains.instance
     @@domain_handler.connection = @@connection
 
     def domains
