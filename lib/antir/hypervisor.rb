@@ -1,13 +1,8 @@
 require 'libvirt'
 require 'singleton'
+# require 'forwardable'
 
-# conn.domains
-# dom = conn.domains.first
-# dom.xml
-# dom.destroy
-# dom.reboot
-# dom.start
-# dom.stop
+require 'antir/hypervisor/domain_handler'
 
 module Antir
   class Hypervisor
@@ -15,45 +10,17 @@ module Antir
     
     #@@hypervisors = [:openvz, :xen]
     HYPERVISOR = 'openvz'
-    @@connection = nil#Libvirt::connect("#{HYPERVISOR}:///system")
-
-    def initialize(hypervisor = :openvz)
-      @hypervisor = hypervisor
-      # check valid driver: @@types.include?(driver)
-
-      #id_disponible = self.class.max_id + 1
-      #self.id = id_disponible
-      #self.name = id_disponible
-      #self.ip = "10.10.1.#{id_disponible}"
-
-      #@domains = Antir::Container::Hypervisor::DomainHandler.new
-
-      self
-    end
+    @@connection = Libvirt::connect("#{HYPERVISOR}:///system")
+    @@domain_handler = Antir::Hypervisor::DomainHandler.instance(@@connection)
 
     def domains
-      @@domains
+      @@domain_handler #.domains
     end
 
+    # delegate max_domain_id, find, create.... a domain_handler
     def max_domain_id
-      @@connection.domains.collect(&:id).max
+      @@domains_handler.max_id
     end
-
-    def connection
-      @@connection
-    end
-
-    private
-    class DomainHandler
-      def initialize(connection)
-        @connection = connection
-      end
-
-      def find(id)
-        @connection.domains.select{|d| d.id == id}[0].xml
-      end
-    end
-    @@domains = Antir::Hypervisor::DomainHandler.new(@@connection)
 
 #    def find(id)
 #      #xml = LibXML::XML::Parser.string(dom.xml).parse
@@ -77,9 +44,5 @@ module Antir
 #      @@connection
 #      #
 #    end
-
-    def self.hypervisors
-      @@hypervisors
-    end
   end
 end
