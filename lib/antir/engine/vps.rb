@@ -1,6 +1,7 @@
 require 'forwardable'
 
 require 'antir/engine/vps/xml'
+require 'antir/engine/vps/states'
 
 require 'antir/engine/hypervisor_handler'
 
@@ -22,11 +23,12 @@ module Antir
       def initialize(create = true)
         @xml = Antir::Engine::VPS::XML.new
 
-        id_disponible = @@hypervisor.domains.max_id + 1
+        id_disponible = 1500 # @@hypervisor.domains.max_id + 1
         self.id = id_disponible
         self.name = id_disponible
         self.ip = "10.10.1.#{id_disponible}"
 
+        super()
         self
       end
       def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
