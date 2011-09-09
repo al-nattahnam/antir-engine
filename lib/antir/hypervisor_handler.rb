@@ -1,14 +1,14 @@
 require 'libvirt'
 require 'singleton'
 # require 'forwardable'
-require 'antir/hypervisor_handler/domains'
+require 'antir/hypervisor/domain_handler'
 
 module Antir
-  module HypervisorHandler
+  module Hypervisor
     #@@hypervisors = [:openvz, :xen]
     HYPERVISOR = 'openvz'
     @@connection = Libvirt::connect("#{HYPERVISOR}:///system")
-    @@domain_handler = Antir::HypervisorHandler::Domains.instance
+    @@domain_handler = Antir::Hypervisor::DomainHandler.instance
     @@domain_handler.connection = @@connection
 
     def domains
@@ -16,9 +16,9 @@ module Antir
     end
 
     # delegate max_domain_id, find, create.... a domain_handler
-    def max_domain_id
-      @@domains_handler.max_id
-    end
+    #def max_domain_id
+    #  @@domain_handler.max_id
+    #end
 
 #    def find(id)
 #      #xml = LibXML::XML::Parser.string(dom.xml).parse
@@ -44,8 +44,8 @@ module Antir
 #    end
   end
 
-  class Hypervisor
-    include Antir::HypervisorHandler
+  class HypervisorHandler
+    include Antir::Hypervisor
     include Singleton
   end
 end
