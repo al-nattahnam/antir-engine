@@ -1,6 +1,6 @@
 require 'libvirt'
 require 'singleton'
- require 'forwardable'
+require 'forwardable'
 require 'antir/engine/hypervisor/domain_handler'
 
 module Antir

@@ -16,17 +16,7 @@ module Antir
           @xml = LibXML::XML::Document.new
           @xml.root = vps_template
   
-          id_disponible = self.class.max_id + 1
-          self.id = id_disponible
-          self.name = id_disponible
-          self.ip = "10.10.1.#{id_disponible}"
-  
           self
-        end
-  
-        def self.max_id
-          # hay que pasarselo por parametro
-          1500
         end
   
         def id=(id)
@@ -71,7 +61,7 @@ module Antir
   
         def self.parse(xml)
           # recibe de VPS::find(id) el xml del dominio y devuelve un objeto VPS::XMLRepresentation
-          vps_xml = Antir::Container::VPS::XML.new
+          vps_xml = Antir::Engine::VPS::XML.new
   
           xml = LibXML::XML::Parser.string(xml).parse
           domain_xml = xml.find('//domain')[0]

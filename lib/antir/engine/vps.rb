@@ -1,6 +1,8 @@
-require 'libvirt'
 require 'forwardable'
+
 require 'antir/engine/vps/xml'
+require 'antir/engine/vps/states'
+
 require 'antir/engine/hypervisor_handler'
 
 # conn.domains
@@ -14,55 +16,32 @@ require 'antir/engine/hypervisor_handler'
 module Antir
   module Engine
     class VPS
-      #attr_accessor :hypervisor
       @@hypervisor = Antir::Engine::HypervisorHandler.instance
   
       extend Forwardable
+
+      include Antir::Engine::VPS::States
   
       def initialize(create = true)
-        #id_disponible = self.class.max_id + 1
-        #self.id = id_disponible
-        #self.name = id_disponible
-        #self.ip = "10.10.1.#{id_disponible}"
-  
         @xml = Antir::Engine::VPS::XML.new
+
+        id_disponible = @@hypervisor.domains.max_id + 1
+        self.id = id_disponible
+        self.name = id_disponible
+        self.ip = "10.10.1.#{id_disponible}"
+
         self
       end
       def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
   
       def self.find(id)
-        vps = Antir::Engine::VPS.new
         xml = @@hypervisor.find(id)
-  
-        xml = LibXML::XML::Parser.string(xml).parse
-        domain_xml = xml.find('//domain')[0]
-  
-        vps.id = domain_xml['id']
-        vps.uuid = domain_xml.find('//uuid')[0].content
-        vps.name = domain_xml.find('//name')[0].content
-        vps.ip = domain_xml.find('//devices/interface/ip')[0]['address']
+        vps = Antir::Engine::VPS::XML.parse(xml)
         vps
-      end
-  
-      def create
-        # validate
-        #   name presence
-  
-        conn = Libvirt::connect('openvz:///system')
-        conn.domains.create(@xml)
-      end
-  
-      def stop
-        conn = Libvirt::connect('openvz:///system')
-        #
       end
   
       def xml
         @xml.to_xml
-      end
-  
-      def self.hypervisors
-        @@hypervisors
       end
     end
   end
