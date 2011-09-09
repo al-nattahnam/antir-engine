@@ -20,7 +20,7 @@ module Antir
       extend Forwardable
 
       def initialize(hypervisor = :openvz, create = true)
-        @hypervisor = Antir::Container::Hypervisor.new
+        @hypervisor = Antir::HypervisorHandler.instance
         # check valid driver: @@types.include?(driver)
 
         #id_disponible = self.class.max_id + 1

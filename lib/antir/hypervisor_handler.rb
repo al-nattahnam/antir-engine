@@ -37,15 +37,10 @@ module Antir
 #      #   name presence
 #      @@connection.domains.create(xml)
 #    end
-#
-#    def stop
-#      @@connection
-#      #
-#    end
   end
 
   class HypervisorHandler
-    include Singleton
     include Antir::Hypervisor
+    include Singleton
   end
 end

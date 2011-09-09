@@ -1,8 +1,6 @@
 require 'libvirt'
 require 'singleton'
 
-# conn.domains
-# dom = conn.domains.first
 # dom.xml
 # dom.destroy
 # dom.reboot
@@ -20,6 +18,10 @@ module Antir
 
       def max_id
         @@connection.domains.collect(&:id).max
+      end
+
+      def find(id)
+        @@connection.domains.select{|d| d.id == id}[0].xml
       end
     end
   end
