@@ -8,6 +8,7 @@ gem "bson", ">= 1.3.1"
 gem "bson_ext", ">= 1.3.1"
 gem "zmq", ">= 2.1.3"
 gem "libxml-ruby", ">= 1.1.4"
+gem "libvirt", ">= 0.2.0"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
