@@ -1,6 +1,5 @@
 require 'forwardable'
 
-require 'antir/engine/vps/states.rb'
 require 'antir/engine/vps/xml'
 
 require 'antir/engine/hypervisor_handler'
@@ -20,8 +19,6 @@ module Antir
   
       extend Forwardable
 
-      include Antir::Engine::VPS::States
-  
       def initialize(create = true)
         @xml = Antir::Engine::VPS::XML.new
 
