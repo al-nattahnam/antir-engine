@@ -4,13 +4,13 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{antir}
+  s.name = %q{antir-engine}
   s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = %q{2011-09-05}
-  s.description = %q{Antir VPSs configuration interface}
+  s.date = %q{2011-09-09}
+  s.description = %q{AntirEngine VPSs configuration interface}
   s.email = %q{krakatoa1987@gmail.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -26,16 +26,19 @@ Gem::Specification.new do |s|
     "VERSION",
     "antir.gemspec",
     "lib/antir.rb",
-    "lib/antir/container/vps.rb",
+    "lib/antir/hypervisor/domain_handler.rb",
+    "lib/antir/hypervisor_handler.rb",
     "lib/antir/server.rb",
+    "lib/antir/vps.rb",
+    "lib/antir/vps/xml.rb",
     "test/helper.rb",
     "test/test_antir.rb"
   ]
-  s.homepage = %q{http://github.com/krakatoa/antir}
+  s.homepage = %q{http://github.com/krakatoa/antir-engine}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.7}
-  s.summary = %q{Antir configuration tool}
+  s.summary = %q{AntirEngine configuration tool}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
@@ -46,6 +49,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<bson>, [">= 1.3.1"])
       s.add_runtime_dependency(%q<bson_ext>, [">= 1.3.1"])
       s.add_runtime_dependency(%q<zmq>, [">= 2.1.3"])
+      s.add_runtime_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_development_dependency(%q<shoulda>, [">= 0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
@@ -55,6 +59,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<bson>, [">= 1.3.1"])
       s.add_dependency(%q<bson_ext>, [">= 1.3.1"])
       s.add_dependency(%q<zmq>, [">= 2.1.3"])
+      s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_dependency(%q<shoulda>, [">= 0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
@@ -65,6 +70,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<bson>, [">= 1.3.1"])
     s.add_dependency(%q<bson_ext>, [">= 1.3.1"])
     s.add_dependency(%q<zmq>, [">= 2.1.3"])
+    s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
     s.add_dependency(%q<shoulda>, [">= 0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
