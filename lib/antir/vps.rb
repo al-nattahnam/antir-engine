@@ -30,13 +30,12 @@ module Antir
     def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
 
     def self.find(id)
-      vps = Antir::Container::VPS.new
+      vps = Antir::VPS.new
       xml = @@hypervisor.find(id)
 
       xml = LibXML::XML::Parser.string(xml).parse
       domain_xml = xml.find('//domain')[0]
 
-      vps = Antir::Container::VPS.new
       vps.id = domain_xml['id']
       vps.uuid = domain_xml.find('//uuid')[0].content
       vps.name = domain_xml.find('//name')[0].content
