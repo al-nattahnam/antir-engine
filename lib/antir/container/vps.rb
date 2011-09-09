@@ -13,16 +13,12 @@ require 'antir/container/vps/xml'
 module Antir
   module Container
     class VPS
-      @@hypervisors = [:openvz, :xen]
-
-      attr_accessor :hypervisor
+      #attr_accessor :hypervisor
+      @@hypervisor = Antir::HypervisorHandler.instance
 
       extend Forwardable
 
-      def initialize(hypervisor = :openvz, create = true)
-        @hypervisor = Antir::HypervisorHandler.instance
-        # check valid driver: @@types.include?(driver)
-
+      def initialize(create = true)
         #id_disponible = self.class.max_id + 1
         #self.id = id_disponible
         #self.name = id_disponible
@@ -33,14 +29,9 @@ module Antir
       end
       def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
 
-      #def self.max_id
-      #  conn = Libvirt::connect('openvz:///system')
-      #  conn.domains.collect(&:id).max
-      #end
-
       def self.find(id)
         vps = Antir::Container::VPS.new
-        xml = @hypervisor.find(id)
+        xml = @@hypervisor.find(id)
 
         xml = LibXML::XML::Parser.string(xml).parse
         domain_xml = xml.find('//domain')[0]
