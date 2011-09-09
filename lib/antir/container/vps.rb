@@ -13,14 +13,14 @@ require 'forwardable'
 module Antir
   module Container
     class VPS
-      @@drivers = [:openvz, :xen]
+      @@hypervisors = [:openvz, :xen]
 
-      attr_accessor :driver
+      attr_accessor :hypervisor
 
       extend Forwardable
 
-      def initialize(driver = :openvz, create = true)
-        @driver = driver
+      def initialize(hypervisor = :openvz, create = true)
+        @hypervisor = hypervisor
         # check valid driver: @@types.include?(driver)
 
         #id_disponible = self.class.max_id + 1
@@ -70,8 +70,8 @@ module Antir
         @xml.to_xml
       end
 
-      def self.drivers
-        @@driver
+      def self.hypervisors
+        @@hypervisors
       end
     end
   end

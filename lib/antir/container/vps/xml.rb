@@ -35,7 +35,6 @@ module Antir
         end
         def id
           id_node = @xml.find('//domain')[0]
-          puts 'hola!'
           id_node['id']
         end
   
