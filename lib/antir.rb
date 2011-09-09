@@ -4,5 +4,5 @@
 #end
 
 require 'antir/server'
-require 'antir/container'
+require 'antir/vps'
 require 'antir/hypervisor_handler'
