@@ -45,7 +45,7 @@ module Antir
   end
 
   class HypervisorHandler
-    include Antir::Hypervisor
     include Singleton
+    include Antir::Hypervisor
   end
 end
