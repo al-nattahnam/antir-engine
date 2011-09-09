@@ -24,7 +24,7 @@ module Antir
       #self.name = id_disponible
       #self.ip = "10.10.1.#{id_disponible}"
 
-      @xml = Antir::Container::VPS::XML.new
+      @xml = Antir::VPS::XML.new
       self
     end
     def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
