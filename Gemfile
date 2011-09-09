@@ -7,6 +7,7 @@ gem "beanstalk-client", ">= 1.1.0"
 gem "bson", ">= 1.3.1"
 gem "bson_ext", ">= 1.3.1"
 gem "zmq", ">= 2.1.3"
+gem "libxml-ruby", ">= 1.1.4"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
