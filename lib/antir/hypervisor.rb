@@ -53,7 +53,7 @@ module Antir
         @connection.domains.select{|d| d.id == id}[0].xml
       end
     end
-    @@domains = Antir::Container::Hypervisor::DomainHandler.new(@@connection)
+    @@domains = Antir::Hypervisor::DomainHandler.new(@@connection)
 
 #    def find(id)
 #      #xml = LibXML::XML::Parser.string(dom.xml).parse
