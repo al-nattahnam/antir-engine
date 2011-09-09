@@ -24,6 +24,11 @@ module Antir
         def find(id)
           @@connection.domains.select{|d| d.id == id}[0].xml
         end
+
+        def create(xml)
+          # @@connection.workers
+          @@connection.domains.create(xml)
+        end
       end
     end
   end

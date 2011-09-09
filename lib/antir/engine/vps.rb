@@ -38,6 +38,10 @@ module Antir
         vps = Antir::Engine::VPS::XML.parse(xml)
         vps
       end
+
+      def create
+        @@hypervisor.create(self.xml)
+      end
   
       def xml
         @xml.to_xml
