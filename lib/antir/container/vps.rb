@@ -1,6 +1,7 @@
 require 'libvirt'
 require 'forwardable'
 require 'antir/container/vps/xml'
+require 'antir/hypervisor_handler'
 
 # conn.domains
 # dom = conn.domains.first
