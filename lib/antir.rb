@@ -5,3 +5,4 @@
 
 require 'antir/server'
 require 'antir/container'
+require 'antir/hypervisor'

@@ -1,5 +1,4 @@
 require 'antir/container/vps'
-require 'antir/container/hypervisor'
 
 module Antir
   module Container

@@ -20,7 +20,7 @@ module Antir
       extend Forwardable
 
       def initialize(hypervisor = :openvz, create = true)
-        @hypervisor = hypervisor
+        @hypervisor = Antir::Container::Hypervisor.new
         # check valid driver: @@types.include?(driver)
 
         #id_disponible = self.class.max_id + 1
@@ -33,16 +33,16 @@ module Antir
       end
       def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
 
-      def self.max_id
-        conn = Libvirt::connect('openvz:///system')
-        conn.domains.collect(&:id).max
-      end
+      #def self.max_id
+      #  conn = Libvirt::connect('openvz:///system')
+      #  conn.domains.collect(&:id).max
+      #end
 
       def self.find(id)
-        conn = Libvirt::connect('openvz:///system')
-        dom = conn.domains.select{|d| d.id == id}[0]
+        vps = Antir::Container::VPS.new
+        xml = @hypervisor.find(id)
 
-        xml = LibXML::XML::Parser.string(dom.xml).parse
+        xml = LibXML::XML::Parser.string(xml).parse
         domain_xml = xml.find('//domain')[0]
 
         vps = Antir::Container::VPS.new
