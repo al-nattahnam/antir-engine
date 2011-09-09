@@ -1,6 +1,6 @@
 require 'forwardable'
 
-require 'antir/engine/vps/states'
+require 'antir/engine/vps/states.rb'
 require 'antir/engine/vps/xml'
 
 require 'antir/engine/hypervisor_handler'
