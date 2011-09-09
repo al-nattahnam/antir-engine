@@ -11,7 +11,9 @@ require 'libvirt'
 module Antir
   module Container
     class Hypervisor
-      @@hypervisors = [:openvz, :xen]
+      #@@hypervisors = [:openvz, :xen]
+      HYPERVISOR = 'openvz'
+      @@connection = Libvirt::connect("#{HYPERVISOR}:///system")
 
       def initialize(hypervisor = :openvz)
         @hypervisor = hypervisor
@@ -22,39 +24,59 @@ module Antir
         #self.name = id_disponible
         #self.ip = "10.10.1.#{id_disponible}"
 
-        @connection = Libvirt::connect("#{@hypervisor}:///system")
+        #@domains = Antir::Container::Hypervisor::DomainHandler.new
 
         self
       end
 
+      def domains
+        @@domains
+      end
+
       def max_domain_id
-        @connection.domains.collect(&:id).max
+        @@connection.domains.collect(&:id).max
       end
 
-      def find(id)
-        @connection.domains.select{|d| d.id == id}[0].xml
-
-        #xml = LibXML::XML::Parser.string(dom.xml).parse
-        #domain_xml = xml.find('//domain')[0]
-
-        #vps = Antir::Container::VPS.new
-        #vps.id = domain_xml['id']
-        #vps.uuid = domain_xml.find('//uuid')[0].content
-        #vps.name = domain_xml.find('//name')[0].content
-        #vps.ip = domain_xml.find('//devices/interface/ip')[0]['address']
-        #vps
+      def connection
+        @@connection
       end
 
-      def create
-        # validate
-        #   name presence
-        @connection.domains.create(@xml)
-      end
+      private
+      class DomainHandler
+        def initialize(connection)
+          @connection = connection
+        end
 
-      def stop
-        @connection
-        #
+        def find(id)
+          @connection.domains.select{|d| d.id == id}[0].xml
+        end
       end
+      @@domains = Antir::Container::Hypervisor::DomainHandler.new(@@connection)
+
+#      def find(id)
+#        @@connection.domains.select{|d| d.id == id}[0].xml
+#
+#        #xml = LibXML::XML::Parser.string(dom.xml).parse
+#        #domain_xml = xml.find('//domain')[0]
+#
+#        #vps = Antir::Container::VPS.new
+#        #vps.id = domain_xml['id']
+#        #vps.uuid = domain_xml.find('//uuid')[0].content
+#        #vps.name = domain_xml.find('//name')[0].content
+#        #vps.ip = domain_xml.find('//devices/interface/ip')[0]['address']
+#        #vps
+#      end
+#
+#      def create(xml)
+#        # validate
+#        #   name presence
+#        @@connection.domains.create(xml)
+#      end
+#
+#      def stop
+#        @@connection
+#        #
+#      end
 
       def self.hypervisors
         @@hypervisors

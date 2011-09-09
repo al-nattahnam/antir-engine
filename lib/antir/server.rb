@@ -7,7 +7,11 @@ require 'beanstalk-client'
 module Antir
   module Server
     class << self
-      def listen      
+      # group = ThreadGroup.new
+      # group.list.size # threads
+      # group.add(Thread.new { process msg from reply.recv() })
+
+      def listen
         context = ZMQ::Context.new
         reply = context.socket ZMQ::REP
         reply.bind('tcp://10.80.1.110:5555')
