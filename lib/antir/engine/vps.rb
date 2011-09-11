@@ -39,12 +39,13 @@ module Antir
         vps
       end
 
-      def create
-        @@hypervisor.create(self.xml)
-      end
-  
       def xml
         @xml.to_xml
+      end
+
+      private
+      def ask_create
+        @@hypervisor.create(self.xml)
       end
     end
   end

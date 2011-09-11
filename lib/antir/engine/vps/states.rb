@@ -13,6 +13,8 @@ module Antir
         end
     
         event :create do
+          #transaction do
+          ask_create
           transition :pending => :waiting
         end
     
