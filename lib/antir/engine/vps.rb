@@ -1,7 +1,6 @@
 require 'forwardable'
 
 require 'antir/engine/vps/xml'
-require 'antir/engine/vps/states'
 
 require 'antir/engine/hypervisor_handler'
 
@@ -43,10 +42,11 @@ module Antir
         @xml.to_xml
       end
 
-      private
+      #private
       def ask_create
         @@hypervisor.create(self.xml)
       end
     end
   end
 end
+require 'antir/engine/vps/states'
