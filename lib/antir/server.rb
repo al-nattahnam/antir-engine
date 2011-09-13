@@ -15,7 +15,7 @@ module Antir
         reply.bind("tcp://#{INCOMING_IP}")
         
         beanstalk = Beanstalk::Pool.new(['127.0.0.1:11300', '127.0.0.1:11301'])
-        
+
         loop do
           msg = reply.recv()
           deserialized_msg = BSON.deserialize(msg)
@@ -26,6 +26,19 @@ module Antir
           response = {:body => "Got #{deserialized_msg['action']}"}
           serialized_response = BSON.serialize(response).to_s
           reply.send(serialized_response)
+        end
+      end
+
+      def wait
+        context = ZMQ::Context.new
+        subscriber = context.socket(ZMQ::REP)
+        subscriber.bind('tcp://127.0.0.1:5556')
+        #filter = '1'
+        #subscriber.setsockopt(ZMQ::SUBSCRIBE, filter)
+        loop do
+          msg = subscriber.recv()
+          puts msg
+          subscriber.send('ok')
         end
       end
     end

@@ -1,5 +1,7 @@
 require 'beanstalk-client'
 
+require 'zmq'
+
 module Antir
   module Engine
     class Worker
@@ -8,6 +10,8 @@ module Antir
       @@workers = []
       ADDRESS = '127.0.0.1'
       PORTS = ['11300', '11301']
+
+      @@report = nil
 
       def initialize(address, port)
         @beanstalk = Beanstalk::Pool.new(["#{address}:#{port}"])
@@ -51,6 +55,9 @@ module Antir
 
       def create(options)
         puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
+        sleep 5
+        @@report.send("created #{options['code']}")
+        msg = @@report.recv()
 
         #vps = Antir::Engine.create_vps
         #vps.create
@@ -76,6 +83,10 @@ module Antir
         @@workers.each do |worker|
           @@group.add(Thread.new { loop { worker.do } } )
         end
+
+        @@context = ZMQ::Context.new
+        @@report = @@context.socket ZMQ::REQ
+        @@report.connect('tcp://127.0.0.1:5556')
       end
     end
   end
