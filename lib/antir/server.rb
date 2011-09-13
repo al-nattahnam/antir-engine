@@ -6,8 +6,8 @@ require 'beanstalk-client'
 module Antir
   module Server
     class << self
-      #INCOMING_IP = '10.80.1.110:5555'
-      INCOMING_IP = '10.40.1.107:5555'
+      INCOMING_IP = '10.80.1.110:5555'
+      #INCOMING_IP = '10.40.1.107:5555'
 
       def listen
         context = ZMQ::Context.new

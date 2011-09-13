@@ -1,5 +1,7 @@
 require 'antir/engine/hypervisor_handler'
 require 'antir/engine/vps'
+require 'antir/engine/worker'
+
 require 'antir/server'
 
 module Antir
