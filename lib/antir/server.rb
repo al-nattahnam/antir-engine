@@ -6,15 +6,13 @@ require 'beanstalk-client'
 module Antir
   module Server
     class << self
-      INCOMING_IP = '10.80.1.110:5555'
-      #INCOMING_IP = '10.40.1.107:5555'
-
       def listen
         context = ZMQ::Context.new
         reply = context.socket ZMQ::REP
-        reply.bind("tcp://#{INCOMING_IP}")
+        reply.bind("tcp://#{Antir::Engine.outer_address}")
         
-        beanstalk = Beanstalk::Pool.new(['127.0.0.1:11300', '127.0.0.1:11301'])
+        pool_ports = Antir::Engine.worker_ports.collect{|port| "127.0.0.1:#{port}"}
+        beanstalk = Beanstalk::Pool.new(pool_ports)
 
         loop do
           msg = reply.recv()
@@ -32,7 +30,7 @@ module Antir
       def wait
         context = ZMQ::Context.new
         subscriber = context.socket(ZMQ::REP)
-        subscriber.bind('tcp://127.0.0.1:5556')
+        subscriber.bind("tcp://#{Antir::Engine.inner_address}")
         #filter = '1'
         #subscriber.setsockopt(ZMQ::SUBSCRIBE, filter)
         loop do

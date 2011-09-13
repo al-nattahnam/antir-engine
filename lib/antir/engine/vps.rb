@@ -22,7 +22,7 @@ module Antir
       def initialize(create = true)
         @xml = Antir::Engine::VPS::XML.new
 
-        id_disponible = 1500 # @@hypervisor.domains.max_id + 1
+        id_disponible = @@hypervisor.domains.max_id + 1
         self.id = id_disponible
         self.name = id_disponible
         self.ip = "10.10.1.#{id_disponible}"
