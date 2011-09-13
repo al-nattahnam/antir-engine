@@ -9,7 +9,7 @@ module Antir
     @@config = nil
 
     def self.load_config(path)
-      @@config = YAML.load(path)
+      @@config = YAML.load_file(path)
     end
 
     def self.outer_address
