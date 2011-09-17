@@ -48,7 +48,6 @@ module Antir
         @xml.to_xml
       end
 
-      protected
       def xml=(xml)
         @xml = xml
       end
