@@ -38,12 +38,20 @@ module Antir
         vps
       end
 
+      def self.ids
+        @@hypervisor.ids
+      end
+
       def xml
         @xml.to_xml
       end
 
       def create
         @@hypervisor.create(self.xml)
+      end
+
+      def destroy
+        @@hypervisor.destroy(self.id)
       end
     end
   end
