@@ -26,10 +26,12 @@ module Antir
         end
   
         def find(id)
+          id = id.to_i
           @@connection.domains.select{|d| d.id == id}[0].xml
         end
 
         def destroy(id)
+          id = id.to_i
           dom = @@connection.domains.select{|d| d.id == id}[0]
           puts dom.inspect
           dom.stop
