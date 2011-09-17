@@ -7,8 +7,7 @@ module Antir
   module Engine
     module Hypervisor
       #HYPERVISOR = 'openvz' # [:openvz, :xen].include?() validar!
-      @@connection = Libvirt::connect("#{Antir::Engine.hypervisor}:///system")
-      @@domain_handler.connection = @@connection
+      @@connection = nil
 
       @@domain_handler = Antir::Engine::Hypervisor::DomainHandler.instance
       #@@domain_handler.connection = @@connection
@@ -20,9 +19,14 @@ module Antir
       # agregar: stop, reboot, etc...
   
       def domains
+        reconnect
+        @@domain_handler #.domains
+      end
+
+      def reconnect
+        return false if not Antir::Engine.hypervisor
         @@connection = Libvirt::connect("#{Antir::Engine.hypervisor}:///system")
         @@domain_handler.connection = @@connection
-        @@domain_handler #.domains
       end
     end
   

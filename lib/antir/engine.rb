@@ -6,6 +6,7 @@ module Antir
 
     def self.load_config(path)
       @@config = YAML.load_file(path)
+      Antir::Hypervisor.instance.reconnect
     end
 
     def self.outer_address
