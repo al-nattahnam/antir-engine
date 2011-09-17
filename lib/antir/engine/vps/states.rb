@@ -14,7 +14,7 @@ module Antir
     
         event :create do
           #transaction do
-          #ask_create
+          ask_create
           transition :pending => :waiting
         end
     

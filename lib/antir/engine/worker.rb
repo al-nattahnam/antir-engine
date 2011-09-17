@@ -55,7 +55,10 @@ module Antir
 
       def create(options)
         puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
-        sleep 5
+        #sleep 5
+        vps = Antir::Engine::VPS.new
+        vps.create
+
         @@report.send("created #{options['code']}")
         msg = @@report.recv()
 
