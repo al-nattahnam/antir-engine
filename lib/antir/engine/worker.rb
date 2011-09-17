@@ -15,8 +15,6 @@ module Antir
         @beanstalk = Beanstalk::Pool.new(["#{address}:#{port}"])
       end
 
-      # pid = fork { worker.do }
-
       # service
       # create  | xml
       # destroy | id
@@ -27,7 +25,6 @@ module Antir
           job = @beanstalk.reserve
           # job.state -> reserved
 
-          #puts job.body
           self.send(job.ybody['action'], job.ybody)
 
           # transaction begin
@@ -54,6 +51,11 @@ module Antir
       def create(options)
         puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
         vps = Antir::Engine::VPS.new
+
+        code = options['code']
+        vps.id = code
+        vps.name = code
+        vps.ip = "10.10.1.#{code}"
         vps.create
 
         @@report.send("created #{options['code']}")
