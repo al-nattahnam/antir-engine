@@ -1,4 +1,5 @@
 require 'state_machine'
+require '../vps'
 
 module Antir
   module Engine
@@ -14,7 +15,7 @@ module Antir
     
         event :create do
           #transaction do
-          self.ask_create
+          #ask_create
           transition :pending => :waiting
         end
     
