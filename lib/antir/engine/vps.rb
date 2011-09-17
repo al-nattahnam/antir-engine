@@ -34,7 +34,9 @@ module Antir
   
       def self.find(id)
         xml = @@hypervisor.find(id)
-        vps = Antir::Engine::VPS::XML.parse(xml)
+        vps_xml = Antir::Engine::VPS::XML.parse(xml)
+        vps = Antir::Engine::VPS.new
+        vps.xml = vps_xml
         vps
       end
 
@@ -44,6 +46,11 @@ module Antir
 
       def xml
         @xml.to_xml
+      end
+
+      protected
+      def xml=(xml)
+        @xml = xml
       end
 
       def create
