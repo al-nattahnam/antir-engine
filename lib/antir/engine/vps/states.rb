@@ -15,7 +15,7 @@ module Antir
     
         event :create do
           #transaction do
-          ask_create
+          lambda { |vps| vps.ask_create }
           transition :pending => :waiting
         end
     
