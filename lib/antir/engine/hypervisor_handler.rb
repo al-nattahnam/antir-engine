@@ -20,7 +20,7 @@ module Antir
   
       def domains
         reconnect
-        @@domain_handler #.domains
+        @@domain_handler
       end
 
       def reconnect

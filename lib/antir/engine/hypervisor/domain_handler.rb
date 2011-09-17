@@ -31,6 +31,7 @@ module Antir
 
         def destroy(id)
           dom = @@connection.domains.select{|d| d.id == id}[0]
+          puts dom.inspect
           dom.stop
           dom.undefine
         end
