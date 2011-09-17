@@ -27,6 +27,11 @@ module Antir
       @@config['workers']['beanstalkd_ports']
     end
 
+    def self.hypervisor
+      return nil if @@config.empty?
+      @@config['hypervisor']
+    end
+
     def self.start
       return false if @@config.empty?
       server = fork { Antir::Server.listen }
