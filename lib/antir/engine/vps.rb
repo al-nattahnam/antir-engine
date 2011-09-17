@@ -43,10 +43,9 @@ module Antir
       end
 
       #private
-      def ask_create
+      def create
         @@hypervisor.create(self.xml)
       end
     end
   end
 end
-require 'antir/engine/vps/states'

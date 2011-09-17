@@ -1,9 +1,8 @@
 require 'state_machine'
-require 'antir/engine/vps'
 
 module Antir
   module Engine
-    class VPS
+    class VPSStates
       state_machine :state, :initial => :pending do
         before_transition :pending => :waiting do
           puts 'creating!'
@@ -15,7 +14,6 @@ module Antir
     
         event :create do
           #transaction do
-          lambda { |vps| vps.ask_create }
           transition :pending => :waiting
         end
     
