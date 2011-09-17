@@ -8,8 +8,6 @@ module Antir
       @@group = ThreadGroup.new
       # group.list.size
       @@workers = []
-      ADDRESS = '127.0.0.1'
-      PORTS = ['11300', '11301']
 
       @@report = nil
 
@@ -55,15 +53,11 @@ module Antir
 
       def create(options)
         puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
-        #sleep 5
         vps = Antir::Engine::VPS.new
         vps.create
 
         @@report.send("created #{options['code']}")
         msg = @@report.recv()
-
-        #vps = Antir::Engine.create_vps
-        #vps.create
       end
 
       def queue_size
@@ -79,8 +73,8 @@ module Antir
       end
 
       def self.start
-        PORTS.each do |port|
-          @@workers << self.new(ADDRESS, port)
+        Antir::Engine.worker_ports.each do |port|
+          @@workers << self.new('127.0.0.1', port)
         end
         
         @@workers.each do |worker|
@@ -89,7 +83,7 @@ module Antir
 
         @@context = ZMQ::Context.new
         @@report = @@context.socket ZMQ::REQ
-        @@report.connect('tcp://127.0.0.1:5556')
+        @@report.connect("tcp://#{Antir::Engine.inner_address}")
       end
     end
   end

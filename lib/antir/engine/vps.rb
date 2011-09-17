@@ -42,7 +42,6 @@ module Antir
         @xml.to_xml
       end
 
-      #private
       def create
         @@hypervisor.create(self.xml)
       end
