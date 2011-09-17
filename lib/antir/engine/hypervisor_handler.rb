@@ -7,7 +7,8 @@ module Antir
   module Engine
     module Hypervisor
       #HYPERVISOR = 'openvz' # [:openvz, :xen].include?() validar!
-      #@@connection = Libvirt::connect("#{HYPERVISOR}:///system")
+      @@connection = Libvirt::connect("#{Antir::Engine.hypervisor}:///system")
+      @@domain_handler.connection = @@connection
 
       @@domain_handler = Antir::Engine::Hypervisor::DomainHandler.instance
       #@@domain_handler.connection = @@connection
