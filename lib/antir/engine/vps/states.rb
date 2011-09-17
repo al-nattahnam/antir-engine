@@ -1,5 +1,5 @@
 require 'state_machine'
-require '../vps'
+require 'antir/engine/vps'
 
 module Antir
   module Engine
