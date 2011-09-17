@@ -15,7 +15,7 @@ module Antir
       @@workers = []
   
       extend Forwardable
-      def_delegators :@@domain_handler, :find, :create, :max_id, :ids
+      def_delegators :@@domain_handler, :find, :create, :max_id, :ids, :destroy
       # agregar: stop, reboot, etc...
   
       def domains
