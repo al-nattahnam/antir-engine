@@ -29,14 +29,12 @@ module Antir
 
       def wait
         context = ZMQ::Context.new
-        subscriber = context.socket(ZMQ::REP)
-        subscriber.bind("tcp://#{Antir::Engine.inner_address}")
-        #filter = '1'
-        #subscriber.setsockopt(ZMQ::SUBSCRIBE, filter)
+        pull = context.socket(ZMQ::REP)
+        pull.connect("tcp://#{Antir::Engine.inner_address}")
         loop do
-          msg = subscriber.recv()
+          msg = pull.recv()
           puts msg
-          subscriber.send('ok')
+          #subscriber.send('ok')
         end
       end
     end

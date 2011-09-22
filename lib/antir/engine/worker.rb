@@ -59,8 +59,10 @@ module Antir
         vps.create
 
         @@report.send("created #{options['code']}")
-        msg = @@report.recv()
+        #msg = @@report.recv()
       end
+
+      #def destroy(options)
 
       def queue_size
         @beanstalk.stats["current-jobs-ready"]
@@ -84,8 +86,8 @@ module Antir
         end
 
         @@context = ZMQ::Context.new
-        @@report = @@context.socket ZMQ::REQ
-        @@report.connect("tcp://#{Antir::Engine.inner_address}")
+        @@report = @@context.socket ZMQ::PUSH
+        @@report.bind("tcp://#{Antir::Engine.inner_address}")
       end
     end
   end
