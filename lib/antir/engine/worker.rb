@@ -87,7 +87,7 @@ module Antir
 
         @@context = ZMQ::Context.new
         @@report = @@context.socket ZMQ::PUSH
-        @@report.bind("tcp://#{Antir::Engine.inner_address}")
+        @@report.connect("ipc://#{Antir::Engine.inner_address}")
       end
     end
   end

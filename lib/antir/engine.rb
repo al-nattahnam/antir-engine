@@ -1,4 +1,5 @@
 require 'antir/server'
+require 'rest_client'
 
 module Antir
   module Engine
@@ -27,6 +28,16 @@ module Antir
     def self.hypervisor
       return nil if @@config.empty?
       @@config['hypervisor']
+    end
+
+    def self.attach
+      return false if @@config.empty?
+
+      json = {'ip' => '10.80.1.110'}.to_json
+      resp = RestClient.post 'http://10.40.1.107:4568/engine', json, :content_type => :json, :accept => :json
+      # resp = JSON.parse(resp)
+      # {'stat' => 'ok', 'code' => '00'}
+      self.start
     end
 
     def self.start

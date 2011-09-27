@@ -1,5 +1,5 @@
 require 'zmq'
-require 'bson'
+require 'json'
 
 require 'beanstalk-client'
 
@@ -16,25 +16,26 @@ module Antir
 
         loop do
           msg = reply.recv()
-          deserialized_msg = BSON.deserialize(msg)
-          deserialized_msg = deserialized_msg.inject({}) { |acc, element| k,v = element; acc[k] = (if v.class == BSON::OrderedHash then v.to_h else v end); acc }
+          # require 'zlib'
+          # Zlib::Inflate.inflate(msg)
+
+          deserialized_msg = JSON.parse(msg)
           #print "Got: #{deserialized_msg['text']} #{deserialized_msg['test_number']}"
           beanstalk.yput(deserialized_msg)
           
           response = {:body => "Got #{deserialized_msg['action']}"}
-          serialized_response = BSON.serialize(response).to_s
+          serialized_response = response.to_json
           reply.send(serialized_response)
         end
       end
 
       def wait
         context = ZMQ::Context.new
-        pull = context.socket(ZMQ::REP)
-        pull.connect("tcp://#{Antir::Engine.inner_address}")
+        pull = context.socket(ZMQ::PULL)
+        pull.bind("ipc://#{Antir::Engine.inner_address}")
         loop do
           msg = pull.recv()
           puts msg
-          #subscriber.send('ok')
         end
       end
     end
