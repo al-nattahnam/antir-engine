@@ -7,12 +7,16 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'test/unit'
-require 'shoulda'
+#require 'test/unit'
+require 'rspec'
+RSpec.configure do |config|
+  config.color_enabled = true
+  config.formatter = 'documentation'
+end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'antir-engine'
 
-class Test::Unit::TestCase
-end
+#class Test::Unit::TestCase
+#end
