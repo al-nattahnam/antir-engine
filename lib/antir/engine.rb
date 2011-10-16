@@ -38,9 +38,9 @@ module Antir
       @config['hypervisor'] rescue nil
     end
 
-    def hypervisor
-      @hypervisor
-    end
+    #def hypervisor
+    #  @hypervisor
+    #end
 
     def domains
       @hypervisor.domains
@@ -66,6 +66,10 @@ module Antir
       server = fork { Antir::Server.listen }
       wait = fork { Antir::Server.wait }
       Antir::Engine::Worker.start
+    end
+
+    def self.method_missing(name, *args)
+      instance.send(name, args)
     end
   end
 end
