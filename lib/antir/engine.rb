@@ -1,47 +1,68 @@
-require 'antir/server'
+#require 'antir/server'
 require 'rest_client'
+require 'singleton'
+
+CONFIG_PATH = '/opt/src/config2.yml'
 
 module Antir
-  module Engine
-    @@config = nil
+  class Engine
+    include Singleton
 
-    def self.load_config(path)
-      @@config = YAML.load_file(path)
-      Antir::Engine::HypervisorHandler.instance.reconnect
+    def initialize
+      load_config
+      @hypervisor = Hypervisor.instance
+      @hypervisor.connect(hypervisor_driver)
     end
 
-    def self.outer_address
-      return nil if @@config.empty?
-      "#{@@config['outer']['host']}:#{@@config['outer']['port']}"
+    def load_config
+      @config = YAML.load_file(CONFIG_PATH)
     end
 
-    def self.inner_address
-      return nil if @@config.empty?
-      "#{@@config['inner']['host']}:#{@@config['inner']['port']}"
+    def reconnect
+      @hypervisor.reload
     end
 
-    def self.worker_ports
-      return nil if @@config.empty?
-      @@config['workers']['beanstalkd_ports']
+    def outer_address
+      "#{@config['outer']['host']}:#{@config['outer']['port']}" rescue nil
     end
 
-    def self.hypervisor
-      return nil if @@config.empty?
-      @@config['hypervisor']
+    def inner_address
+      "#{@config['inner']['host']}:#{@config['inner']['port']}" rescue nil
     end
 
-    def self.attach
-      return false if @@config.empty?
+    def worker_ports
+      @config['workers']['beanstalkd_ports'] rescue nil
+    end
 
-      json = {'ip' => '10.80.1.110'}.to_json
-      resp = RestClient.post 'http://10.40.1.107:4568/engine', json, :content_type => :json, :accept => :json
+    def hypervisor_driver
+      @config['hypervisor'] rescue nil
+    end
+
+    def hypervisor
+      @hypervisor
+    end
+
+    def domains
+      @hypervisor.domains
+    end
+
+    def attach
+      return false if @config.empty?
+
+      json = {'ip' => @config['outer']['host']}
+      resp = RestClient.post 'http://10.0.0.5:3000/engines/register', json, :content_type => :json, :accept => :json
+
+      #resource = RestClient::Resource.new('http://127.0.0.1:3000/engines')
+      #resp = resource['register'].post :code => '03'
+      #resource['3/show'].get
+
       # resp = JSON.parse(resp)
       # {'stat' => 'ok', 'code' => '00'}
-      self.start
+      start
     end
 
-    def self.start
-      return false if @@config.empty?
+    def start
+      return false if @config.empty?
       server = fork { Antir::Server.listen }
       wait = fork { Antir::Server.wait }
       Antir::Engine::Worker.start
@@ -49,6 +70,6 @@ module Antir
   end
 end
 
-require 'antir/engine/hypervisor_handler'
+require 'antir/engine/hypervisor'
 require 'antir/engine/vps'
 require 'antir/engine/worker'

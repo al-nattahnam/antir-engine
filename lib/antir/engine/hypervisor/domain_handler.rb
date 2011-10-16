@@ -8,39 +8,39 @@ require 'singleton'
 # dom.stop
 
 module Antir
-  module Engine
-    module Hypervisor
+  class Engine
+    class Hypervisor
       class DomainHandler
         include Singleton
   
         def connection=(connection)
-          @@connection = connection
+          @connection = connection
         end
   
         def max_id
-          @@connection.domains.collect(&:id).max
+          @connection.domains.collect(&:id).max
         end
 
         def ids
-          @@connection.domains.collect(&:id)
+          @connection.domains.collect(&:id)
         end
   
         def find(id)
           id = id.to_i
-          @@connection.domains.select{|d| d.id == id}[0].xml
+          @connection.domains.select{|d| d.id == id}[0].xml
         end
 
         def destroy(id)
           id = id.to_i
-          dom = @@connection.domains.select{|d| d.id == id}[0]
+          dom = @connection.domains.select{|d| d.id == id}[0]
           puts dom.inspect
           dom.stop
           dom.undefine
         end
 
         def create(xml)
-          # @@connection.workers
-          @@connection.domains.create(xml)
+          # @connection.workers
+          @connection.domains.create(xml)
         end
       end
     end

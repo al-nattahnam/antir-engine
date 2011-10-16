@@ -1,7 +1,7 @@
 require 'libxml'
 
 module Antir
-  module Engine
+  class Engine
     class VPS
       class XML
         @@drivers = [:openvz, :xen]

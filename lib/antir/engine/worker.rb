@@ -3,7 +3,7 @@ require 'beanstalk-client'
 require 'zmq'
 
 module Antir
-  module Engine
+  class Engine
     class Worker
       @@group = ThreadGroup.new
       # group.list.size

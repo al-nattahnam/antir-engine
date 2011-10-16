@@ -2,7 +2,7 @@ require 'forwardable'
 
 require 'antir/engine/vps/xml'
 
-require 'antir/engine/hypervisor_handler'
+require 'antir/engine/hypervisor'
 
 # conn.domains
 # dom = conn.domains.first
@@ -13,16 +13,14 @@ require 'antir/engine/hypervisor_handler'
 # dom.stop
 
 module Antir
-  module Engine
+  class Engine
     class VPS
-      @@hypervisor = Antir::Engine::HypervisorHandler.instance
-  
       extend Forwardable
 
       def initialize(create = true)
         @xml = Antir::Engine::VPS::XML.new
 
-        id_disponible = (@@hypervisor.domains.max_id || 100) + 1
+        id_disponible = (Antir::Engine.domains.max_id || 100) + 1
         self.id = id_disponible
         self.name = id_disponible
         self.ip = "10.10.1.#{id_disponible}"
@@ -33,7 +31,7 @@ module Antir
       def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
   
       def self.find(id)
-        xml = @@hypervisor.find(id)
+        xml = Antir::Engine.domains.find(id)
         vps_xml = Antir::Engine::VPS::XML.parse(xml)
         vps = Antir::Engine::VPS.new
         vps.xml = vps_xml
@@ -41,7 +39,7 @@ module Antir
       end
 
       def self.ids
-        @@hypervisor.ids
+        Antir::Engine.domains.ids
       end
 
       def xml
@@ -53,11 +51,11 @@ module Antir
       end
 
       def create
-        @@hypervisor.create(self.xml)
+        Antir::Engine.domains.create(self.xml)
       end
 
       def destroy
-        @@hypervisor.destroy(self.id)
+        Antir::Engine.domains.destroy(self.id)
       end
     end
   end
