@@ -10,14 +10,14 @@ module Antir
     class Hypervisor
       include Singleton
 
-      @connection = nil
-
-      @domain_handler = Antir::Engine::Hypervisor::DomainHandler.instance
-
-      @workers = []
-  
       extend Forwardable
       def_delegators :@domain_handler, :find, :create, :max_id, :ids, :destroy # stop, reboot, etc...
+
+      def initialize
+        @connection = nil
+        @domain_handler = Antir::Engine::Hypervisor::DomainHandler.instance
+        @workers = []
+      end
   
       def connect(driver, reload=false)
         @driver = driver if not reload
@@ -25,7 +25,7 @@ module Antir
       end
 
       def reload
-        connect
+        connect(@driver, true)
         @domain_handler.connection = @connection
       end
 

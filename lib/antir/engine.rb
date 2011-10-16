@@ -18,10 +18,6 @@ module Antir
       @config = YAML.load_file(CONFIG_PATH)
     end
 
-    def reconnect
-      @hypervisor.reload
-    end
-
     def outer_address
       "#{@config['outer']['host']}:#{@config['outer']['port']}" rescue nil
     end
@@ -38,9 +34,9 @@ module Antir
       @config['hypervisor'] rescue nil
     end
 
-    #def hypervisor
-    #  @hypervisor
-    #end
+    def reconnect
+      @hypervisor.reload
+    end
 
     def domains
       @hypervisor.domains
@@ -69,7 +65,7 @@ module Antir
     end
 
     def self.method_missing(name, *args)
-      instance.send(name, args)
+      instance.send(name, *args)
     end
   end
 end
