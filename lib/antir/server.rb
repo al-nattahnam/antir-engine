@@ -5,6 +5,7 @@ require 'beanstalk-client'
 
 module Antir
   module Server
+    # TODO Usar Em-Zmq como en Em-Core
     class << self
       def listen
         context = ZMQ::Context.new
@@ -20,6 +21,7 @@ module Antir
           # Zlib::Inflate.inflate(msg)
 
           deserialized_msg = JSON.parse(msg)
+          puts deserialized_msg
           #print "Got: #{deserialized_msg['text']} #{deserialized_msg['test_number']}"
           beanstalk.yput(deserialized_msg)
           

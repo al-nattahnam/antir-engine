@@ -2,8 +2,6 @@ require 'forwardable'
 
 require 'antir/engine/vps/xml'
 
-#require 'antir/engine/hypervisor'
-
 # conn.domains
 # dom = conn.domains.first
 # dom.xml
