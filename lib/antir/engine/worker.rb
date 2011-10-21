@@ -1,6 +1,6 @@
 require 'beanstalk-client'
 
-require 'zmq'
+#require 'zmq'
 
 module Antir
   class Engine

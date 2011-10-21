@@ -3,6 +3,7 @@ require 'rest_client'
 require 'singleton'
 
 CONFIG_PATH = '/opt/src/config2.yml'
+#CONFIG_PATH = '/home/fernando/desarrollo/workspace/experimentos/antir/engine/config.yml'
 
 module Antir
   class Engine
@@ -15,6 +16,11 @@ module Antir
     end
 
     def load_config
+      # en lugar de esto, tener un atributo para 
+      #   - outer_address
+      #   - inner_address
+      #   - worker_ports
+      #   - 
       @config = YAML.load_file(CONFIG_PATH)
     end
 
@@ -73,3 +79,4 @@ end
 require 'antir/engine/hypervisor'
 require 'antir/engine/vps'
 require 'antir/engine/worker'
+require 'antir/engine/dispatcher'
