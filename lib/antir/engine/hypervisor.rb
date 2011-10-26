@@ -19,13 +19,13 @@ module Antir
         @workers = []
       end
   
-      def connect(driver, reload=false)
-        @driver = driver if not reload
+      def connect(driver, args={})
+        @driver = driver if not args[:reload]
         @connection = Libvirt::connect("#{@driver}:///system")
       end
 
       def reload
-        connect(@driver, true)
+        connect(@driver, :reload => true)
         @domain_handler.connection = @connection
       end
 

@@ -8,36 +8,28 @@ CONFIG_PATH = '/opt/src/config2.yml'
 module Antir
   class Engine
     include Singleton
+    attr_reader :outer_address, :inner_address, :hypervisor_driver, :worker_ports
 
     def initialize
       load_config
       @hypervisor = Hypervisor.instance
       @hypervisor.connect(hypervisor_driver)
+
+      @dispatcher = Antir::Engine::Dispatcher.instance
+      @workers = Antir::Engine::WorkerPool.new(@worker_ports)
     end
 
     def load_config
-      # en lugar de esto, tener un atributo para 
-      #   - outer_address
-      #   - inner_address
-      #   - worker_ports
-      #   - 
-      @config = YAML.load_file(CONFIG_PATH)
-    end
-
-    def outer_address
-      "#{@config['outer']['host']}:#{@config['outer']['port']}" rescue nil
-    end
-
-    def inner_address
-      "#{@config['inner']['host']}:#{@config['inner']['port']}" rescue nil
-    end
-
-    def worker_ports
-      @config['workers']['beanstalkd_ports'] rescue nil
-    end
-
-    def hypervisor_driver
-      @config['hypervisor'] rescue nil
+      config = YAML.load_file(CONFIG_PATH)
+      begin
+        @outer_host = config['outer']['host']
+        @outer_address = "#{config['outer']['host']}:#{config['outer']['port']}"
+        @inner_address = "#{config['inner']['host']}:#{config['inner']['port']}"
+        @hypervisor_driver = config['hypervisor']
+        @worker_ports = config['workers']['beanstalkd_ports']
+      rescue
+        throw "Engine could not be initializated! Config is missing"
+      end
     end
 
     def reconnect
@@ -49,9 +41,7 @@ module Antir
     end
 
     def attach
-      return false if @config.empty?
-
-      json = {'ip' => @config['outer']['host']}
+      json = {'ip' => @outer_host}
       resp = RestClient.post 'http://10.0.0.5:3000/engines/register', json, :content_type => :json, :accept => :json
 
       #resource = RestClient::Resource.new('http://127.0.0.1:3000/engines')
@@ -64,10 +54,12 @@ module Antir
     end
 
     def start
-      return false if @config.empty?
-      server = fork { Antir::Server.listen }
-      wait = fork { Antir::Server.wait }
-      Antir::Engine::Worker.start
+      @workers.each do |worker|
+        worker.start
+      end
+      @dispatcher.start
+      #server = fork { Antir::Server.listen }
+      #wait = fork { Antir::Server.wait }
     end
 
     def self.method_missing(name, *args)
