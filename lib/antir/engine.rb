@@ -7,16 +7,13 @@ CONFIG_PATH = '/opt/src/config2.yml'
 
 module Antir
   class Engine
-    include Singleton
     attr_reader :outer_address, :inner_address, :hypervisor_driver, :worker_ports
+    include Singleton
 
     def initialize
       load_config
       @hypervisor = Antir::Engine::Hypervisor.instance
-      @hypervisor.connect(hypervisor_driver)
-
-      @dispatcher = Antir::Engine::Dispatcher.instance
-      @worker_pool = Antir::Engine::WorkerPool.new(@worker_ports)
+      @hypervisor.connect(@hypervisor_driver)
     end
 
     def load_config
@@ -42,7 +39,7 @@ module Antir
 
     def attach
       json = {'ip' => @outer_host}
-      resp = RestClient.post 'http://10.0.0.5:3000/engines/register', json, :content_type => :json, :accept => :json
+      resp = RestClient.post 'http://10.0.0.3:3000/engines/register', json, :content_type => :json, :accept => :json
 
       #resource = RestClient::Resource.new('http://127.0.0.1:3000/engines')
       #resp = resource['register'].post :code => '03'
@@ -54,14 +51,13 @@ module Antir
     end
 
     def start
-      @workers.each do |worker|
+      @dispatcher = Antir::Engine::Dispatcher.instance
+      @worker_pool = Antir::Engine::WorkerPool.new(@worker_ports)
+
+      @worker_pool.workers.each do |worker|
         worker.start
       end
       @dispatcher.start
-    end
-
-    def to_s
-      instance.to_s
     end
 
     def self.method_missing(name, *args)
