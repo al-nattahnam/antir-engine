@@ -58,8 +58,6 @@ module Antir
         worker.start
       end
       @dispatcher.start
-      #server = fork { Antir::Server.listen }
-      #wait = fork { Antir::Server.wait }
     end
 
     def to_s

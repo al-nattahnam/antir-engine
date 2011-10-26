@@ -42,7 +42,7 @@ module Antir
       # stop    | id
 
       def start
-        fork {
+        process = fork {
           loop do
             if self.queue_size > 0 then
               job = @beanstalk.reserve
