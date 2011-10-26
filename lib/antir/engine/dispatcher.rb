@@ -1,5 +1,4 @@
 require 'singleton'
-
 require 'em-zeromq'
 require 'json'
 
@@ -19,8 +18,8 @@ module Antir
         EM.run do
           ctx = EM::ZeroMQ::Context.new(1)
 
-          ctx.bind(ZMQ::REP, "tcp://#{Antir::Engine.outer_address}", OuterHandler)
-          ctx.bind(ZMQ::PULL, "tcp://#{Antir::Engine.inner_address}", InnerHandler)
+          ctx.bind(ZMQ::REP, "tcp://#{Antir::Engine.outer_address}", OuterHandler.new)
+          ctx.bind(ZMQ::PULL, "tcp://#{Antir::Engine.inner_address}", InnerHandler.new)
         end
       end
 
@@ -29,6 +28,7 @@ module Antir
         def on_readable(socket, messages)
           messages.each do |m|
             puts m.copy_out_string
+            socket.send_msg('ok!')
           end
         end
       end

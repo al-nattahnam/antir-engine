@@ -12,11 +12,11 @@ module Antir
 
     def initialize
       load_config
-      @hypervisor = Hypervisor.instance
+      @hypervisor = Antir::Engine::Hypervisor.instance
       @hypervisor.connect(hypervisor_driver)
 
       @dispatcher = Antir::Engine::Dispatcher.instance
-      @workers = Antir::Engine::WorkerPool.new(@worker_ports)
+      @worker_pool = Antir::Engine::WorkerPool.new(@worker_ports)
     end
 
     def load_config
@@ -60,6 +60,10 @@ module Antir
       @dispatcher.start
       #server = fork { Antir::Server.listen }
       #wait = fork { Antir::Server.wait }
+    end
+
+    def to_s
+      instance.to_s
     end
 
     def self.method_missing(name, *args)
