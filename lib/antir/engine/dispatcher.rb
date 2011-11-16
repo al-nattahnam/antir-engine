@@ -11,7 +11,6 @@ module Antir
 
       def initialize
         pool_addresses = Antir::Engine.worker_ports.collect{|port| "127.0.0.1:#{port}"}
-        @worker_pool = Beanstalk::Pool.new(pool_addresses)
       end
 
       def start
@@ -28,7 +27,8 @@ module Antir
         def on_readable(socket, messages)
           messages.each do |m|
             puts m.copy_out_string
-            socket.send_msg('ok!')
+            resp = Antir::Engine.worker_pool.push m.copy_out_string
+            socket.send_msg('ok!') # devolver un response (id, status.. etc)
           end
         end
       end

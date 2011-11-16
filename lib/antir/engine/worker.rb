@@ -1,3 +1,5 @@
+require 'json'
+#require 'zlib'
 require 'beanstalk-client'
 
 #require 'em-zeromq'
@@ -16,12 +18,21 @@ module Antir
         worker_ports.each do |port|
           @workers << Antir::Engine::Worker.new('127.0.0.1', port)
         end
+
+        @beanstalk = Beanstalk::Pool.new(worker_ports.collect{|port| "127.0.0.1:#{port}" })
       end
 
       def workers
         @workers
       end
-        
+
+      def push(msg)
+        #Zlib::Inflate.inflate(msg)
+        deserialized_msg = JSON.parse(msg)
+        @beanstalk.yput(deserialized_msg)
+        {:id => 1, :status => 'got'} # core asignaria un id de tarea
+      end
+
       #@@workers.each do |worker|
       #  @@group.add(Thread.new { loop { worker.do } } )
       #end
