@@ -34,6 +34,7 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    sigar (0.7.0)
     state_machine (1.0.2)
     zmq (2.1.4)
 
@@ -54,4 +55,5 @@ DEPENDENCIES
   redis (>= 2.2.2)
   rest-client (>= 1.6.7)
   rspec (~> 2.6)
+  sigar (= 0.7.0)
   zmq (>= 2.1.4)

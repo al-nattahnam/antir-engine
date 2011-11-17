@@ -12,6 +12,7 @@ gem "libvirt", ">= 0.2.0"
 gem "redis", ">= 2.2.2"
 gem "json", ">= 1.6.1"
 gem "rest-client", ">= 1.6.7"
+gem "sigar", "0.7.0"
 
 gem "antir-machine", "0.1.1"
 
