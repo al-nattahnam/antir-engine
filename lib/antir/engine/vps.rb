@@ -10,7 +10,7 @@ require 'forwardable'
 
 module Antir
   class Engine
-    class VPS < Antir::Machines::VPSMachine
+    class VPS < Antir::Machines::VPS
       extend Forwardable
 
       def initialize(create = true)
