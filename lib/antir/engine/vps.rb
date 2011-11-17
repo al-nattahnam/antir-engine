@@ -12,7 +12,7 @@ require 'antir/engine/vps/xml'
 
 module Antir
   class Engine
-    class VPS < Antir::Machines::VPS
+    class VPS < Antir::Machines::VPSMachine
       extend Forwardable
 
       def initialize(create = true)
