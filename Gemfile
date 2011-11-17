@@ -13,6 +13,8 @@ gem "redis", ">= 2.2.2"
 gem "json", ">= 1.6.1"
 gem "rest-client", ">= 1.6.7"
 
+gem "antir-machine", "0.1.1"
+
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development do
