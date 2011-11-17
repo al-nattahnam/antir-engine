@@ -1,7 +1,5 @@
 require 'forwardable'
 
-require 'antir/engine/vps/xml'
-
 # conn.domains
 # dom = conn.domains.first
 # dom.xml
@@ -58,3 +56,5 @@ module Antir
     end
   end
 end
+
+require 'antir/engine/vps/xml'
