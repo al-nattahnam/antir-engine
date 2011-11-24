@@ -1,4 +1,3 @@
-#require 'antir/server'
 require 'rest_client'
 require 'singleton'
 
@@ -8,7 +7,7 @@ CONFIG_PATH = '/opt/src/config2.yml'
 
 module Antir
   class Engine
-    attr_reader :outer_address, :inner_address, :hypervisor_driver, :worker_ports
+    attr_reader :outer_address, :inner_address, :hypervisor_driver, :worker_ports, :worker_pool
     include Singleton
 
     def initialize
@@ -21,7 +20,10 @@ module Antir
       config = YAML.load_file(CONFIG_PATH)
       begin
         #@outer_host = config['outer']['host']
-        @outer_host = Sigar.new.net_interface_config('eth0').address
+        net_config = Sigar.new.net_interface_config('eth0')
+
+        @outer_host = net_config.address
+        @mac = net_config.hwaddr
         @outer_address = "#{config['outer']['host']}:#{config['outer']['port']}"
         @inner_address = "#{config['inner']['host']}:#{config['inner']['port']}"
         @hypervisor_driver = config['hypervisor']
@@ -40,8 +42,8 @@ module Antir
     end
 
     def attach
-      json = {'ip' => @outer_host}
-      resp = RestClient.post 'http://192.168.123.100:3000/engines/register', json, :content_type => :json, :accept => :json
+      json = {'mac' => @mac, 'ip' => @outer_host}
+      resp = RestClient.post 'http://10.0.0.4:3000/engines/register', json, :content_type => :json, :accept => :json
 
       #resource = RestClient::Resource.new('http://127.0.0.1:3000/engines')
       #resp = resource['register'].post :code => '03'
@@ -74,6 +76,6 @@ module Antir
 end
 
 require 'antir/engine/hypervisor'
-require 'antir/engine/vps'
+#require 'antir/engine/vps'
 require 'antir/engine/worker'
 require 'antir/engine/dispatcher'
