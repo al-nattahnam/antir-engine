@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = "2011-11-17"
+  s.date = "2011-11-24"
   s.description = "AntirEngine VPSs configuration interface"
   s.email = "krakatoa1987@gmail.com"
   s.extra_rdoc_files = [
@@ -30,8 +30,6 @@ Gem::Specification.new do |s|
     "lib/antir/engine/dispatcher.rb",
     "lib/antir/engine/hypervisor.rb",
     "lib/antir/engine/hypervisor/domain_handler.rb",
-    "lib/antir/engine/vps.rb",
-    "lib/antir/engine/vps/xml.rb",
     "lib/antir/engine/worker.rb",
     "lib/antir/server.rb",
     "spec/engine_spec.rb",
