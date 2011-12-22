@@ -41,9 +41,30 @@ module Antir
       @hypervisor.domains
     end
 
+    # service
+    # create  | xml
+    # destroy | id
+    # stop    | id
+
+    def create(options)
+      puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
+      vps = Antir::Engine::VPS.new
+
+      code = options['code']
+      vps.id = code
+      vps.name = code
+      vps.ip = "10.10.1.#{code}"
+      vps.create
+
+      @report.send_string("created #{options['code']}")
+      #msg = @@report.recv()
+    end
+
+    #def destroy(options)
+
     def attach
       json = {'mac' => @mac, 'ip' => @outer_host}
-      resp = RestClient.post 'http://10.0.0.4:3000/engines/register', json, :content_type => :json, :accept => :json
+      resp = RestClient.post 'http://10.0.0.3:3000/engines/register', json, :content_type => :json, :accept => :json
 
       #resource = RestClient::Resource.new('http://127.0.0.1:3000/engines')
       #resp = resource['register'].post :code => '03'
@@ -55,18 +76,7 @@ module Antir
     end
 
     def start
-      @dispatcher = Antir::Engine::Dispatcher.instance
-      @worker_pool = Antir::Engine::WorkerPool.new(@worker_ports)
-      
-      @worker_pool.workers.each do |worker|
-        worker.start
-      end
-      @dispatcher.start
-
-      #return false if @config.empty?
-      #server = fork { Antir::Server.listen }
-      #wait = fork { Antir::Server.wait }
-      #Antir::Engine::Worker.start
+      Cucub.start!(@outer_host)
     end
 
     def self.method_missing(name, *args)
@@ -77,5 +87,3 @@ end
 
 require 'antir/engine/hypervisor'
 #require 'antir/engine/vps'
-require 'antir/engine/worker'
-require 'antir/engine/dispatcher'

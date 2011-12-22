@@ -3,10 +3,12 @@ source "http://rubygems.org"
 # Example:
 #   gem "activesupport", ">= 2.3.5"
 
-gem "beanstalk-client", ">= 1.1.0"
+gem "cucub-object"
+
+#gem "beanstalk-client", ">= 1.1.0"
 gem "bson", ">= 1.3.1"
 gem "bson_ext", ">= 1.3.1"
-gem "zmq", ">= 2.1.4"
+#gem "zmq", ">= 2.1.4"
 gem "libxml-ruby", ">= 1.1.4"
 gem "libvirt", ">= 0.2.0"
 gem "redis", ">= 2.2.2"
