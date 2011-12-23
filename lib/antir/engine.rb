@@ -12,7 +12,7 @@ module Antir
 
     def initialize
       load_config
-      @hypervisor = Antir::Engine::Hypervisor.instance
+      @hypervisor = Antir::Hypervisor.instance
       @hypervisor.connect(@hypervisor_driver)
     end
 

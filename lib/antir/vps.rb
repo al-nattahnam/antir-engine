@@ -9,52 +9,48 @@ require 'forwardable'
 # dom.stop
 
 module Antir
-  class Engine
-    class VPS < Antir::Machines::VPS
-      extend Forwardable
+  class VPS < Antir::Machines::VPS
+    extend Forwardable
 
-      def initialize(create = true)
-        @xml = Antir::Engine::VPS::XML.new
+    def initialize(create = true)
+      @xml = Antir::VPS::XML.new
 
-        id_disponible = (Antir::Engine.domains.max_id || 100) + 1
-        self.id = id_disponible
-        self.name = id_disponible
-        self.ip = "10.10.1.#{id_disponible}"
+      id_disponible = (Antir::Engine.domains.max_id || 100) + 1
+      self.id = id_disponible
+      self.name = id_disponible
+      self.ip = "10.10.1.#{id_disponible}"
 
-        super()
-        self
-      end
-      def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
+      super()
+      self
+    end
+    def_delegators :@xml, :id, :name, :uuid, :ip, :'id=', :'name=', :'uuid=', :'ip='
   
-      def self.find(id)
-        xml = Antir::Engine.domains.find(id)
-        vps_xml = Antir::Engine::VPS::XML.parse(xml)
-        vps = Antir::Engine::VPS.new
-        vps.xml = vps_xml
-        vps
-      end
+    def self.find(id)
+      xml = Antir::Engine.domains.find(id)
+      vps_xml = Antir::VPS::XML.parse(xml)
+      vps = Antir::VPS.new
+      vps.xml = vps_xml
+      vps
+    end
 
-      def self.ids
-        Antir::Engine.domains.ids
-      end
+    def self.ids
+      Antir::Engine.domains.ids
+    end
 
-      def xml
-        @xml.to_xml
-      end
+    def xml
+      @xml.to_xml
+    end
 
-      def xml=(xml)
-        @xml = xml
-      end
+    def xml=(xml)
+      @xml = xml
+    end
 
-      def create
-        Antir::Engine.domains.create(self.xml)
-      end
+    def create
+      Antir::Engine.domains.create(self.xml)
+    end
 
-      def destroy
-        Antir::Engine.domains.destroy(self.id)
-      end
+    def destroy
+      Antir::Engine.domains.destroy(self.id)
     end
   end
 end
-
-require 'antir/engine/vps/xml'
