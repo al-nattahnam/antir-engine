@@ -1,3 +1,5 @@
+require 'cucub-object'
+
 require 'antir-machine'
 
 require 'antir/engine'

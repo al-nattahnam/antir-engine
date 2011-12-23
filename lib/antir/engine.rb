@@ -9,6 +9,7 @@ module Antir
   class Engine
     attr_reader :outer_address, :inner_address, :hypervisor_driver, :worker_ports, :worker_pool
     include Singleton
+    include Cucub::LiveObject
 
     def initialize
       load_config

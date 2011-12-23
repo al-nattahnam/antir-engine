@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "antir-engine"
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = "2011-11-24"
+  s.date = "2011-12-23"
   s.description = "AntirEngine VPSs configuration interface"
   s.email = "krakatoa1987@gmail.com"
   s.extra_rdoc_files = [
@@ -27,11 +27,10 @@ Gem::Specification.new do |s|
     "antir-engine.gemspec",
     "lib/antir-engine.rb",
     "lib/antir/engine.rb",
-    "lib/antir/engine/dispatcher.rb",
-    "lib/antir/engine/hypervisor.rb",
-    "lib/antir/engine/hypervisor/domain_handler.rb",
-    "lib/antir/engine/worker.rb",
-    "lib/antir/server.rb",
+    "lib/antir/hypervisor.rb",
+    "lib/antir/hypervisor/domain_handler.rb",
+    "lib/antir/vps.rb",
+    "lib/antir/vps/xml.rb",
     "spec/engine_spec.rb",
     "spec/spec_helper.rb"
   ]
@@ -45,10 +44,9 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<beanstalk-client>, [">= 1.1.0"])
+      s.add_runtime_dependency(%q<cucub-object>, [">= 0"])
       s.add_runtime_dependency(%q<bson>, [">= 1.3.1"])
       s.add_runtime_dependency(%q<bson_ext>, [">= 1.3.1"])
-      s.add_runtime_dependency(%q<zmq>, [">= 2.1.4"])
       s.add_runtime_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_runtime_dependency(%q<libvirt>, [">= 0.2.0"])
       s.add_runtime_dependency(%q<redis>, [">= 2.2.2"])
@@ -61,10 +59,9 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
       s.add_development_dependency(%q<rcov>, [">= 0"])
     else
-      s.add_dependency(%q<beanstalk-client>, [">= 1.1.0"])
+      s.add_dependency(%q<cucub-object>, [">= 0"])
       s.add_dependency(%q<bson>, [">= 1.3.1"])
       s.add_dependency(%q<bson_ext>, [">= 1.3.1"])
-      s.add_dependency(%q<zmq>, [">= 2.1.4"])
       s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_dependency(%q<libvirt>, [">= 0.2.0"])
       s.add_dependency(%q<redis>, [">= 2.2.2"])
@@ -78,10 +75,9 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rcov>, [">= 0"])
     end
   else
-    s.add_dependency(%q<beanstalk-client>, [">= 1.1.0"])
+    s.add_dependency(%q<cucub-object>, [">= 0"])
     s.add_dependency(%q<bson>, [">= 1.3.1"])
     s.add_dependency(%q<bson_ext>, [">= 1.3.1"])
-    s.add_dependency(%q<zmq>, [">= 2.1.4"])
     s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
     s.add_dependency(%q<libvirt>, [">= 0.2.0"])
     s.add_dependency(%q<redis>, [">= 2.2.2"])
