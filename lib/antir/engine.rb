@@ -11,6 +11,8 @@ module Antir
     include Singleton
     include Cucub::LiveObject
 
+    live :channel, :reply
+
     def initialize
       load_config
       @hypervisor = Antir::Hypervisor.instance
@@ -26,9 +28,9 @@ module Antir
         @outer_host = net_config.address
         @mac = net_config.hwaddr
         @outer_address = "#{config['outer']['host']}:#{config['outer']['port']}"
-        @inner_address = "#{config['inner']['host']}:#{config['inner']['port']}"
+        #@inner_address = "#{config['inner']['host']}:#{config['inner']['port']}"
         @hypervisor_driver = config['hypervisor']
-        @worker_ports = config['workers']['beanstalkd_ports']
+        # @worker_ports = config['workers']['beanstalkd_ports']
       rescue
         throw "Engine could not be initializated! Config is missing"
       end
