@@ -47,17 +47,17 @@ module Antir
     # stop    | id
 
     def create(options)
-      puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
-      vps = Antir::Engine::VPS.new
+      #puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
+      #vps = Antir::VPS.new
+      puts options.inspect
 
-      code = options['code']
-      vps.id = code
-      vps.name = code
-      vps.ip = "10.10.1.#{code}"
-      vps.create
+      #code = options['code']
+      #vps.id = code
+      #vps.name = code
+      #vps.ip = "10.10.1.#{code}"
+      #vps.create
 
-      @report.send_string("created #{options['code']}")
-      #msg = @@report.recv()
+      #@report.send_string("created #{options['code']}")
     end
 
     #def destroy(options)
@@ -84,6 +84,3 @@ module Antir
     end
   end
 end
-
-require 'antir/engine/hypervisor'
-#require 'antir/engine/vps'
