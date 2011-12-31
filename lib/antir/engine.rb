@@ -49,16 +49,17 @@ module Antir
     # destroy | id
     # stop    | id
 
-    def create(options)
+    def vps_create(options)
       #puts "#{@beanstalk.last_conn.addr}: create #{options['code']}\n"
-      #vps = Antir::VPS.new
       puts options.inspect
+      vps = Antir::VPS.new
 
-      #code = options['code']
-      #vps.id = code
-      #vps.name = code
-      #vps.ip = "10.10.1.#{code}"
-      #vps.create
+      code = options['code']
+      vps.id = code
+      vps.name = code
+      vps.ip = "10.10.1.#{code}"
+      puts vps.inspect
+      vps.create
 
       #@report.send_string("created #{options['code']}")
     end
