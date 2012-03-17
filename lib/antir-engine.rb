@@ -2,6 +2,8 @@ require 'cucub-object'
 
 require 'antir-machine'
 
+$:.unshift File.dirname(__FILE__)
+
 require 'antir/engine'
 
 require 'antir/hypervisor'

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Fernando Alonso"]
-  s.date = "2011-12-23"
+  s.date = "2012-02-05"
   s.description = "AntirEngine VPSs configuration interface"
   s.email = "krakatoa1987@gmail.com"
   s.extra_rdoc_files = [
@@ -50,7 +50,7 @@ Gem::Specification.new do |s|
       s.add_runtime_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_runtime_dependency(%q<libvirt>, [">= 0.2.0"])
       s.add_runtime_dependency(%q<redis>, [">= 2.2.2"])
-      s.add_runtime_dependency(%q<json>, [">= 1.6.1"])
+      s.add_runtime_dependency(%q<json>, [">= 1.4.6"])
       s.add_runtime_dependency(%q<rest-client>, [">= 1.6.7"])
       s.add_runtime_dependency(%q<sigar>, ["= 0.7.0"])
       s.add_runtime_dependency(%q<antir-machine>, ["= 0.1.1"])
@@ -65,7 +65,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
       s.add_dependency(%q<libvirt>, [">= 0.2.0"])
       s.add_dependency(%q<redis>, [">= 2.2.2"])
-      s.add_dependency(%q<json>, [">= 1.6.1"])
+      s.add_dependency(%q<json>, [">= 1.4.6"])
       s.add_dependency(%q<rest-client>, [">= 1.6.7"])
       s.add_dependency(%q<sigar>, ["= 0.7.0"])
       s.add_dependency(%q<antir-machine>, ["= 0.1.1"])
@@ -81,7 +81,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<libxml-ruby>, [">= 1.1.4"])
     s.add_dependency(%q<libvirt>, [">= 0.2.0"])
     s.add_dependency(%q<redis>, [">= 2.2.2"])
-    s.add_dependency(%q<json>, [">= 1.6.1"])
+    s.add_dependency(%q<json>, [">= 1.4.6"])
     s.add_dependency(%q<rest-client>, [">= 1.6.7"])
     s.add_dependency(%q<sigar>, ["= 0.7.0"])
     s.add_dependency(%q<antir-machine>, ["= 0.1.1"])
